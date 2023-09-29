@@ -1,0 +1,11 @@
+<section class="">
+    <div class="mt-5 section-home row m-0">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let item of AVAILABLE_MENUS">
+            <div class="card card-home-redirect" *ngIf="validatePermission(item.permission)" [routerLink]="item.url">
+                <div class="card-body d-flex justify-content-center">
+                    <h5 class="card-title mb-0">{{item.label}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

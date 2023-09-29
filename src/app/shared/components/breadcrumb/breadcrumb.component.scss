@@ -1,0 +1,17 @@
+.navbar-bradcrumb {
+    background-color: #dddd;
+    color: gray;
+    font-weight: bold;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+
+    .close-icon-return {
+        font-size: 40px;
+        line-height: 20px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+}
