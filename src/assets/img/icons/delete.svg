@@ -1,0 +1,10 @@
+<svg id="eliminarAZUL" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39.146" height="44.039" viewBox="0 0 39.146 44.039">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_123" data-name="Rectángulo 123" width="39.146" height="44.039" fill="#1f2b5b"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_254" data-name="Grupo 254" clip-path="url(#clip-path)">
+    <path id="Trazado_211" data-name="Trazado 211" d="M7.34,44.038A4.712,4.712,0,0,1,3.884,42.6a4.712,4.712,0,0,1-1.437-3.456V7.339H0V2.446H12.233V0h14.68V2.446H39.146V7.339H36.7V39.145a4.907,4.907,0,0,1-4.893,4.893Zm24.466-36.7H7.34V39.145H31.806ZM12.233,34.252h4.893V12.232H12.233Zm9.787,0h4.893V12.232H22.02ZM7.34,7.339v0Z" transform="translate(0 0.001)" fill="#1f2b5b"/>
+  </g>
+</svg>

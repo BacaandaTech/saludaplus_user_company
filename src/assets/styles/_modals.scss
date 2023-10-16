@@ -1,0 +1,22 @@
+@import "variables";
+
+$modal-content-bg: $modal-background-color;
+$modal-header-border-color:transparent;
+$modal-content-border-radius:15px;
+$modal-content-color:white;
+$modal-inner-padding: $modal-inner-padding;
+$modal-header-padding: $modal-header-inner-padding;
+.custom-modal{
+    .form-label{
+        color:#2e4382;
+    }
+    .modal-body-text{
+        font-weight: 600;
+        font-size: 18px;
+        color: $modal-body-text-color !important;
+    }
+    .modal-footer{
+        justify-content: space-evenly !important;
+        padding-bottom: 1rem;
+    }
+}

@@ -1,8 +1,8 @@
-<ng-template [ngIf]="auth">
-    <app-navbar></app-navbar>
-    <app-breadcrumb></app-breadcrumb>
-</ng-template>
-
-<section id="main">
+<section id="main" [ngClass]="{'not-logged': !auth}">
+    <ng-template [ngIf]="auth">
+        <header>
+            <app-navbar></app-navbar>
+        </header>
+    </ng-template>
     <router-outlet></router-outlet>
 </section>

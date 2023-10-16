@@ -1,0 +1,91 @@
+@import "variables";
+
+
+/* Mixin buttons */
+
+// Bootstrap 3.3.5 mixin required by my mixin
+// bootstrap-sass/assets/stylesheets/bootstrap/mixins/_buttons.scss
+@mixin button-variant($color, $background, $border) {
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+ 
+    &:focus,
+    &.focus {
+       color: $color;
+       background-color: darken($background, 10%);
+       border-color: darken($border, 25%);
+    }
+ 
+    &:hover {
+       color: $color;
+       background-color: darken($background, 10%);
+       border-color: darken($border, 12%);
+    }
+ 
+    &:active,
+    &.active,
+    .open>&.dropdown-toggle {
+       color: $color;
+       background-color: darken($background, 10%);
+       border-color: darken($border, 12%);
+ 
+       &:hover,
+       &:focus,
+       &.focus {
+          color: $color;
+          background-color: darken($background, 17%);
+          border-color: darken($border, 25%);
+       }
+    }
+ 
+    &:active,
+    &.active,
+    .open>&.dropdown-toggle {
+       background-image: none;
+    }
+ 
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+ 
+       &,
+       &:hover,
+       &:focus,
+       &.focus,
+       &:active,
+       &.active {
+          background-color: $background;
+          border-color: $border;
+       }
+    }
+ 
+    .badge {
+       color: $background;
+       background-color: $color;
+    }
+ }
+ 
+ // Mixin to create a bootstrap button with custom colors
+ @mixin bootstrap-button($background) {
+    $color: #fff;
+    $border: transparent;
+ 
+    @if (lightness($background) >=lightness(#aaa)) {
+       $color: #333;
+    }
+ 
+    @include button-variant($color, $background, $border);
+ }
+
+ .btn-login{
+    @include bootstrap-button($button-color-login);
+ }
+
+ .btn-add{
+   @include bootstrap-button($button-color-add); 
+ }
+
+ .btn-cancel{
+   @include bootstrap-button($button-color-cancel); 
+ }

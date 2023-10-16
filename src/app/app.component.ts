@@ -21,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy{
     this.authSubscription = this.authService.currentAuth.subscribe(
       status => {
         this.auth = status;
-        console.log(this.auth)
       }
     );
   }

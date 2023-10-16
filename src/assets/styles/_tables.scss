@@ -1,0 +1,29 @@
+@use "../../../node_modules/ag-grid-community/styles" as ag;
+
+@import "variables";
+
+@include ag.grid-styles((
+    theme: alpine,
+));
+.ag-theme-alpine {
+    // Nest rules in .ag-theme-alpine so that the selectors include the theme name.
+    // Without the theme name, your styles will not override the theme's built-in
+    // styles due to CSS selector specificity rules.
+    --ag-font-family: Monserrat, sans-serif;
+
+    /* Table header */
+    --ag-header-background-color: #5280e1;
+    --ag-header-foreground-color: #1f2b5b;
+
+    /* Table border */
+    --ag-border-color: #5280e1;
+
+    .ag-root-wrapper {
+        border-radius: 35px !important;
+    }
+
+    .ag-header-cell-label {
+        justify-content: center !important;
+        font-size: 20px;
+    }
+}

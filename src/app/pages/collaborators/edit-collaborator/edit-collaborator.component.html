@@ -1,0 +1,56 @@
+<article>
+    <app-breadcrumb [searchBar]="false" [links]="links" [actionButton]="false"></app-breadcrumb>
+    <div class="container-fluid mt-5">
+        <form [formGroup]="frmCreateCollaborator" novalidate enctype="multipart/form-data"
+            (ngSubmit)="createCollaborator()" #myForm="ngForm">
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="card main-card">
+                        <div class="card-header">
+                            <h4>Editar colaborador</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row d-flex" style="flex-wrap: wrap;">
+                                <div class="col-6 mb-2">
+                                    <label for="first_name" class="form-label">Nombre(s)</label>
+                                    <input type="text" id="first_name" formControlName="first_name"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="last_name" class="form-label">Apellido Paterno</label>
+                                    <input type="text" id="last_name" formControlName="last_name"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="second_last_name" class="form-label">Apellido Materno</label>
+                                    <input type="text" id="second_last_name" formControlName="second_last_name"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="email" class="form-label">Correo Electronico</label>
+                                    <input type="email" id="email" formControlName="email" class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="birthday" class="form-label">Fecha de Nacimiento</label>
+                                    <input type="text" id="birthday" formControlName="birthday"
+                                        class="ms-2 form-control" bsDatepicker [bsConfig]="datePickerConfig" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="department" class="form-label">Departamento</label>
+                                    <input type="text" id="department" formControlName="department"
+                                        class="ms-2 form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-cancel me-4" (click)="returnToList()">Cancelar</button>
+                            <button class="btn btn-add" type="submit" [disabled]="myForm.form.invalid">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</article>

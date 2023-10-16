@@ -10,10 +10,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LandingComponent } from './pages/landing/landing.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { JwtInterceptor } from './shared/interceptors/jwt.inteceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
-
+import { SharedModule } from './shared/modules/shared.module';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalCommonModule } from './shared/modules/modal.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -22,7 +25,7 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     LoginComponent,
     LandingComponent,
     NavbarComponent,
-    BreadcrumbComponent
+    NotFoundComponent
 
   ],
   imports: [
@@ -33,7 +36,11 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     AgGridModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    SharedModule,
+    ModalCommonModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,39 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+.color-blue {
+    color: #1F2B5B;
+    h3 {
+        font-weight: 400;
+    }
+}
+.container-avatar-default-navbar {
+    background-color: white;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 10px;
+    img {
+        width: 47px;
+        height: 47px;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+}
+.dropdown-menu {
+    inset: 100% auto auto -75px !important;
+}
+.navbar {
+    height: 100px;
+    background-color: white;
+    
+    .navbar-brand {
+        img {
+            width: 170px;
+        }
+    }
+}

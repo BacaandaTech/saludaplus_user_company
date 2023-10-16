@@ -1,8 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, DomLayoutType, GridReadyEvent } from 'ag-grid-community';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, takeUntil } from 'rxjs';
+import { Observable, Subject, Subscription, of, takeUntil } from 'rxjs';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
+import { CollaboratorStatusComponent } from './ag-grid/collaborator-status.component';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { CollaboratorActionsComponent } from './ag-grid/collaborator-actions.component';
+import { BUTTON_ACTIONS, IButtonDetails } from 'src/app/shared/interfaces/utils.interface';
 
 @Component({
   selector: 'app-list-collaborators',
@@ -20,6 +24,23 @@ export class ListCollaboratorsComponent {
   public rowData$!: Observable<any[]>;
   public domLayout: DomLayoutType = 'autoHeight';
 
+  public links:any =[
+    {
+      url:'/main',
+      label:'Inicio'
+    },
+    {
+      url:'/collaborators/list',
+      label:'Colaboradores'
+    },
+  ];
+
+  public buttonDetails: IButtonDetails = {
+    action:BUTTON_ACTIONS.REDIRECT,
+    label:'Agregar',
+    url:'/collaborators/create'
+  }
+
   public columnDefs: ColDef[] = [
     {
       field: 'id',
@@ -27,9 +48,28 @@ export class ListCollaboratorsComponent {
       headerClass:'table-header'
     },
     {
-      field: 'email',
-      headerName: 'EMAIL',
-      headerClass:'table-header'
+      headerName: 'APELLIDOS',
+      headerClass:'table-header',
+      cellRenderer: (params:any) => {
+        return params.data.meta.last_name +" "+ params.data.meta.second_last_name;
+      }
+    },
+    {
+      headerName: 'NOMBRE(S)',
+      headerClass:'table-header',
+      cellRenderer: (params:any) => {
+        return params.data.meta.name;
+      }
+    },
+    {
+      headerName: 'ESTATUS',
+      headerClass:'table-header',
+      cellRenderer: CollaboratorStatusComponent
+    },
+    {
+      headerName: 'ACCIONES',
+      headerClass:'table-header',
+      cellRenderer: CollaboratorActionsComponent
     },
     
   ];
@@ -51,7 +91,7 @@ export class ListCollaboratorsComponent {
 
   public makingRequest:boolean = false;
 
-  private updateDataSubscription:Subscription;
+  public updateDataSubscription:Subscription;
 
   constructor(
     private collaboratorsService:CollaboratorsService
@@ -78,14 +118,9 @@ export class ListCollaboratorsComponent {
     this.unsuscribe$.unsubscribe()
   }
 
-  ngAfterViewInit() {
-    this.searchDebounce.pipe(
-      debounceTime(1500),
-      distinctUntilChanged())
-      .subscribe(value => {
-        this.searchValue = value;
-        this.getCollaborators(this.searchValue);
-      });
+  handleSearchValue(value:any){
+    this.searchValue = value;
+    this.getCollaborators(this.searchValue);
   }
 
   onGridReady(params: GridReadyEvent) {
@@ -107,12 +142,12 @@ export class ListCollaboratorsComponent {
         this.totalCollaborators = response.data.pagination.total;
         this.makingRequest = false;
         this.agGrid.gridOptions?.api?.sizeColumnsToFit();
-        console.log(response.data.collaborators)
       }
     })
   }
 
-  loadPage():void{
+  loadPage(event: PageChangedEvent):void{
+    this.currentPage = event.page;
     this.getCollaborators(this.searchValue);
   }
 }

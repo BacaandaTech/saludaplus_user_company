@@ -1,0 +1,26 @@
+@import "variables";
+
+$card-bg:#f7f7f7;
+$card-border-radius:20px;
+$card-border-color:transparent;
+$card-spacer-y: 2rem;
+$card-spacer-x: 2rem;
+$card-cap-bg:#f7f7f7;
+$card-cap-padding-y:1rem;
+$card-cap-padding-x: 2rem;
+
+.main-card{
+    .card-header{
+        background-color: $card-header-background-color;
+        color:white;
+    }
+    .form-label{
+        color:#405d94;
+        font-weight: 600;
+    }
+    .card-footer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

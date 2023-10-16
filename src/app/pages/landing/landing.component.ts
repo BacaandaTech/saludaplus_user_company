@@ -6,31 +6,43 @@ import { checkPermission } from 'src/app/shared/services/utils.service';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
+  public links:any =[
+    {
+      url:'/main',
+      label:'Inicio'
+    }
+  ];
+
    AVAILABLE_MENUS = [
     {
       label:'Mis polizas',
       permission:"manage_policy",
-      url:''
-    },
-    {
-      label:'Colaboradores',
-      permission:"list_collaborators",
-      url:'/collaborators/list'
+      url:'',
+      icon:'shield.svg'
     },
     {
       label:'Facturacion',
       permission:"list_billing",
-      url:''
+      url:'',
+      icon:'card.svg'
     },
     {
-      label:'Usuarios',
-      permission:"list_users",
-      url:''
+      label:'Colaboradores',
+      permission:"list_collaborators",
+      url:'/collaborators/list',
+      icon:'hands.svg'
     },
     {
       label:'Configuracion',
       permission:"edit_profile",
-      url:''
+      url:'',
+      icon:'config.svg'
+    },
+    {
+      label:'Usuarios',
+      permission:"list_users",
+      url:'/users/list',
+      icon:'users.svg'
     },
   
   ];

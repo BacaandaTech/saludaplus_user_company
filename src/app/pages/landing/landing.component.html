@@ -1,9 +1,18 @@
-<section class="">
-    <div class="mt-5 section-home row m-0">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let item of AVAILABLE_MENUS">
-            <div class="card card-home-redirect" *ngIf="validatePermission(item.permission)" [routerLink]="item.url">
-                <div class="card-body d-flex justify-content-center">
-                    <h5 class="card-title mb-0">{{item.label}}</h5>
+<section class="landing">
+    <app-breadcrumb [searchBar]="false" [links]="links"></app-breadcrumb>
+    <div class="row m-0">
+        <div class="col-lg-8 offset-2">
+            <div class="mt-3 section-home row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 menu-item-container" *ngFor="let item of AVAILABLE_MENUS">
+                    <div class="menu-item" *ngIf="validatePermission(item.permission)" [routerLink]="item.url">
+                        <div class="menu-icon">
+                            <img src="/assets/img/icons/{{item.icon}}" alt="">
+                        </div>
+                        <div class="menu-text">
+                            <div class="border-circle"></div>
+                            {{item.label}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

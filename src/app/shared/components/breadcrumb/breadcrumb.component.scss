@@ -1,13 +1,25 @@
-.navbar-bradcrumb {
-    background-color: #dddd;
-    color: gray;
-    font-weight: bold;
+
+
+.navbar-breadcrumb {
+   /*  $breadcrumb-font-size:              15px;
+    $breadcrumb-divider-color:          white;
+    $breadcrumb-active-color:           white;
+    $breadcrumb-divider:                quote("/"); */
+
+    background-color: #acc2fe;
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
+    .breadcrumb-item{
+        
+        font-weight: bold;
 
+        a,&:before{
+            color:white !important;
+        }
+    }
     .close-icon-return {
         font-size: 40px;
         line-height: 20px;

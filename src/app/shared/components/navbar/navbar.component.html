@@ -1,17 +1,15 @@
-<nav class="navbar navbar-dark bg-dark px-5">
-    <span class="navbar-brand mb-0 h1 cursor-pointer" [routerLink]='["/home"]'>
-        <h1>Saluda+</h1>
+<nav class="navbar px-5">
+  <span class="navbar-brand mb-0 cursor-pointer" [routerLink]='["/home"]'>
+    <img src="assets/img/logo/RI.png" alt="realinver-realidades-de-inversion">
+  </span>
+  <div class="d-flex align-items-center color-blue" *ngIf="has_session">
+    <h3 class="m-0">HOLA, {{name_user}}!</h3>
+    <span dropdown class="container-avatar-default-navbar" placement="bottom left" style="position: relative;">
+      <img [src]="avatar_user" id="button-basic" dropdownToggle type="button" aria-controls="dropdown-basic"/>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="button-basic">
+        <li class="cursor-pointer"><a class="dropdown-item" (click)="logoutAction()">Cerrar sesión</a></li>
+        <li class="cursor-pointer"><a class="dropdown-item" [routerLink]='["/configuracion"]'>Configuración</a></li>
+      </ul>
     </span>
-    <!-- <div class="d-flex align-items-center" *ngIf="has_session">
-      <h3 class="text-white">Hola, {{name_user}}!</h3>
-      <span class="container-avatar-default-navbar ms-4 dropend" type="button" id="dropdown-navbar" data-bs-toggle="dropdown" aria-expanded="false">
-        <img [src]="avatar_user" />
-      </span>
-      <div class="dropdown">
-        <ul class="dropdown-menu" aria-labelledby="dropdown-navbar">
-          <li class="cursor-pointer"><a class="dropdown-item" (click)="logoutAction()">Cerrar sesión</a></li>
-          <li class="cursor-pointer"><a class="dropdown-item" [routerLink]='["/configuracion"]'>Configuración</a></li>
-        </ul>
-      </div>
-    </div> -->
+  </div>
 </nav>
