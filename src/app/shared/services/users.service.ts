@@ -40,7 +40,7 @@ export class usersService {
   }
 
   createUser(data:any){
-    return this.http.getQuery('post', 'rand/create/users/', data).pipe(map((resp) => resp as any));
+    return this.http.getQuery('post', 'brand/create/users/', data).pipe(map((resp) => resp as any));
   }
 
   deleteUser(userId:string){

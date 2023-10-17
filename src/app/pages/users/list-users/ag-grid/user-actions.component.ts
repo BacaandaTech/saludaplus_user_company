@@ -51,10 +51,10 @@ export class UserActionsComponent implements ICellRendererAngularComp {
     }
 
     deleteCollaborator(){
-        this.modalService.openDeleteCollaboratorModal(this.params.data)
+        
     }
 
     goToEdit(){
-        this.router.navigateByUrl('/collaborators/edit/'+this.params.data.meta.id)
+        this.router.navigateByUrl('/users/edit/'+this.params.data.meta.id)
     }
 }
