@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, DomLayoutType, GridReadyEvent } from 'ag-grid-community';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of, takeUntil } from 'rxjs';
 import { PoliciesService } from 'src/app/shared/services/policies.service';
 
@@ -20,6 +21,17 @@ export class PoliciesListComponent implements OnInit{
   public rowData$!: Observable<any[]>;
   public domLayout: DomLayoutType = 'autoHeight';
 
+  public links:any =[
+    {
+      url:'/main',
+      label:'Inicio'
+    },
+    {
+      url:'/policies/list',
+      label:'Polizas'
+    },
+  ];
+
   public columnDefs: ColDef[] = [
     {
       field: 'created_at',
@@ -37,10 +49,22 @@ export class PoliciesListComponent implements OnInit{
       headerName: 'VIGENCIA',
       headerClass:'table-header',
       cellRenderer: (params:any) => {
+        
         return params.data.policy.validity;
       }
     },
     {
+      headerName: 'USUARIO ASIGNADO',
+      headerClass:'table-header',
+      cellRenderer: (params:any) => {
+        if(params.data.user_request){
+          return params.data.user_request.user.meta.last_name +" "+ params.data.user_request.user.meta.second_last_name;
+        }else{
+          return "";
+        }
+      }
+    },
+    /* {
       headerName: 'ESTATUS',
       headerClass:'table-header',
       cellRenderer: (params:any) => {
@@ -48,13 +72,13 @@ export class PoliciesListComponent implements OnInit{
           <div class="status ${params.data.status}">${params.data.status == 'available' ? 'NO ASIGNADO' : 'ASIGNADO'}</div>
         `;
       }
-    },
+    }, */
 
-    {
+    /* {
       headerName: 'ACCIONES',
       headerClass:'table-header',
       
-    },
+    }, */
     
   ];
 
@@ -71,7 +95,7 @@ export class PoliciesListComponent implements OnInit{
 
   //Variables for debounce search
   searchValue: string = '';
-  searchDebounce = new Subject<string | any>();
+
 
   public makingRequest:boolean = false;
 
@@ -97,23 +121,20 @@ export class PoliciesListComponent implements OnInit{
   }
 
   ngOnDestroy(): void {
-    this.searchDebounce.unsubscribe();
+    
     this.unsuscribe$.next();
     this.unsuscribe$.unsubscribe()
   }
 
-  ngAfterViewInit() {
-    this.searchDebounce.pipe(
-      debounceTime(1500),
-      distinctUntilChanged())
-      .subscribe(value => {
-        this.searchValue = value;
-        this.getPolicies(this.searchValue);
-      });
-  }
+ 
 
   onGridReady(params: GridReadyEvent) {
     this.params = params;
+  }
+
+  handleSearchValue(value:any){
+    this.searchValue = value;
+    this.getPolicies(this.searchValue);
   }
 
   getPolicies(query?: string) {
@@ -127,15 +148,16 @@ export class PoliciesListComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         this.rowData$ = of(response.data.policies);
-        this.currentPage = response.data.policies.length / this.policiesPerPage;
-        this.totalPolicies = response.data.policies.length;
+        this.currentPage = response.data.pagination.current_page;;
+        this.totalPolicies = response.data.pagination.total;
         this.makingRequest = false;
         this.agGrid.gridOptions?.api?.sizeColumnsToFit();
       }
     })
   }
 
-  loadPage():void{
+  loadPage(event: PageChangedEvent):void{
+    this.currentPage = event.page;
     this.getPolicies(this.searchValue);
   }
 }

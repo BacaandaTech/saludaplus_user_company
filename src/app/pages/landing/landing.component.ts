@@ -17,15 +17,15 @@ export class LandingComponent {
     {
       label:'Mis polizas',
       permission:"manage_policy",
-      url:'',
+      url:'/policies/list',
       icon:'shield.svg'
     },
-    {
+    /* {
       label:'Facturacion',
       permission:"list_billing",
       url:'',
       icon:'card.svg'
-    },
+    }, */
     {
       label:'Colaboradores',
       permission:"list_collaborators",

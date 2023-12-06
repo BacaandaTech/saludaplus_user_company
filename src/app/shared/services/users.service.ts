@@ -43,8 +43,15 @@ export class usersService {
     return this.http.getQuery('post', 'brand/create/users/', data).pipe(map((resp) => resp as any));
   }
 
+  detailUser(userId:string){
+    return this.http.getQuery('get', `brand/users/${userId}`,null).pipe(map((resp) => resp as any));
+  }
+
+  updateUser(userId:string,data:any){
+    return this.http.getQuery('put', `brand/collaborator/${userId}`,data).pipe(map((resp) => resp as any));
+  }
+
   deleteUser(userId:string){
-    return this.http.getQuery('delete', `brand/collaborator//${userId}`,null).pipe(map((resp) => resp as any));
-    
+    return this.http.getQuery('delete', `brand/collaborator/${userId}`,null).pipe(map((resp) => resp as any));
   }
 }

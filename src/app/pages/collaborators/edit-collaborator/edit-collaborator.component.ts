@@ -28,9 +28,21 @@ export class EditCollaboratorComponent implements OnInit {
     },
   ];
 
+  public genders = [
+    {
+      label:'Masculino',
+      value:'male'
+    },
+    {
+      label:'Femenino',
+      value:'female'
+    },
+  ];
+
+
   public datePickerConfig = CONFIG_DATE_PICKER;
 
-  public frmCreateCollaborator: FormGroup;
+  public frmEditCollaborator: FormGroup;
   public idCollab:any = null;
 
 
@@ -43,30 +55,61 @@ export class EditCollaboratorComponent implements OnInit {
   ) {
     
 
-    this.frmCreateCollaborator = this.fb.group({
+    this.frmEditCollaborator = this.fb.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       second_last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       birthday: ['', Validators.required],
       department: ['', Validators.required],
+      gender: ['male', Validators.required],
+      telephone: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      colony: ['', Validators.required],
+      street: ['', Validators.required],
+      external_number: ['', Validators.required],
+      internal_number: ['', Validators.required],
+      zipcode: ['', Validators.required],
     })
   }
 
   ngOnInit(): void {
-    this.idCollab = this.route.snapshot.paramMap.get('id_comunicate');
-
-    
+    this.idCollab = this.route.snapshot.paramMap.get('id_collab');
+    if(this.idCollab){
+      this.collabService.detailCollaborator(this.idCollab).subscribe({
+        next:(response:any) =>{
+          console.log(response.data.user);
+          this.frmEditCollaborator.patchValue({
+            first_name: response.data.user.meta.name,
+            last_name: response.data.user.meta.last_name,
+            second_last_name: response.data.user.meta.second_last_name,
+            email: response.data.user.email,
+            birthday: response.data.user.meta.birthday,
+            department: response.data.user.meta.department,
+            gender: response.data.user.meta.gender,
+            telephone: response.data.user.meta.telephone,
+            country: response.data.user.meta.country,
+            state: response.data.user.meta.state,
+            city: response.data.user.meta.city,
+            colony: response.data.user.meta.colony,
+            street: response.data.user.meta.street,
+            external_number: response.data.user.meta.external_number,
+            internal_number: response.data.user.meta.internal_number,
+            zipcode: response.data.user.meta.zipcode,
+          })
+        }
+      });
+    }
   }
 
-  createCollaborator(): void {
-    let formData = toFormData(this.frmCreateCollaborator.value);
-    formData.set('birthday', formatDate(this.frmCreateCollaborator.controls['birthday'].value!));
+  editCollaborator(): void {
+    this.frmEditCollaborator.get('birthday')?.setValue(formatDate(this.frmEditCollaborator.controls['birthday'].value!))
 
-    this.collabService.createCollaborator(formData).subscribe({
+    this.collabService.updateCollaborator(this.idCollab,this.frmEditCollaborator.value!).subscribe({
       next: (response) => {
-        this.modalService.openConfirmModal("El colaborador ha sido creado correctamente");
-        this.frmCreateCollaborator.reset();
+        this.modalService.openConfirmModal("El colaborador ha sido actualizado correctamente");
       },
       error: (err) => {
         console.log(err)

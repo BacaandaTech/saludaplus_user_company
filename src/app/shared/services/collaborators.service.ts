@@ -42,8 +42,16 @@ export class CollaboratorsService {
     return this.http.getQuery('post', 'brand/collaborator/', data).pipe(map((resp) => resp as any));
   }
 
+  updateCollaborator(collabId:string,data:any){
+    return this.http.getQuery('put', `brand/collaborator/${collabId}`,data).pipe(map((resp) => resp as any));
+  }
+
+  detailCollaborator(collabId:string){
+    return this.http.getQuery('get', `brand/list/collaborator/${collabId}`,null).pipe(map((resp) => resp as any));
+  }
+
   deleteCollaborator(collabId:string){
     return this.http.getQuery('delete', `brand/collaborator/${collabId}`,null).pipe(map((resp) => resp as any));
-    
   }
+
 }

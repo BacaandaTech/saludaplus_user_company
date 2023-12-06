@@ -1,30 +1,27 @@
-<div class="container-fluid mt-5">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex align-items-center">
-                <input type="text" class="form-control" name="" [(ngModel)]="searchValue" placeholder="Buscar" (ngModelChange)="this.searchDebounce.next($event)" [disabled]="makingRequest"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-10 offset-1">
-            <div class="row">
-                <div class="col-12">
-                    <!-- AG Grid Angular Component -->
-                    <ag-grid-angular  class="ag-theme-alpine"
-                        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData$ | async"
-                        [rowSelection]="'multiple'" [animateRows]="true" [domLayout]="domLayout"
-                        [animateRows]="true"
-                        (gridReady)="onGridReady($event)"></ag-grid-angular>
+,<article>
+    <app-breadcrumb [searchBar]="true" [links]="links" (emitSearchValue)="handleSearchValue($event)" [actionButton]="false"></app-breadcrumb>
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-10 offset-1">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- AG Grid Angular Component -->
+                        <ag-grid-angular class="ag-theme-alpine" [columnDefs]="columnDefs"
+                            [defaultColDef]="defaultColDef" [rowData]="rowData$ | async" [rowSelection]="'multiple'"
+                            [animateRows]="true" [domLayout]="domLayout" [animateRows]="true"
+                            (gridReady)="onGridReady($event)"></ag-grid-angular>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <!-- <pagination class="d-flex justify-content-end" [totalItems]="this.totalPolicies" [(ngModel)]="currentPage" (pageChanged)="loadPage()" [disabled]="makingRequest"></pagination> -->
-                    
-                </div>
-            </div>
-        </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <pagination class="d-flex justify-content-end" [totalItems]="this.totalPolicies"
+                            [(ngModel)]="currentPage" (pageChanged)="loadPage($event)" [disabled]="makingRequest">
+                        </pagination>
 
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+</article>

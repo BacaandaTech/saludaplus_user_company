@@ -10,15 +10,6 @@ export const hasSession = (): boolean => {
     return false;
 }
 
-export const setUser = (user: any): void => {
-    localStorage.setItem('user', JSON.stringify(user))
-}
-export const getUserData = (): any => {
-    const user_data: any = localStorage.getItem('user');
-    if (user_data)
-        return JSON.parse(user_data)
-    return null
-}
 
 export const formatDate = (date: Date): string => {
     return moment(date).format('YYYY-MM-DD');

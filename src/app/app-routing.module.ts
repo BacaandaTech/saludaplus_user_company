@@ -1,26 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
 import { NotLoggedGuard } from './shared/guards/not_logged.guard';
-import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
-  
- 
-  {path: '', redirectTo:'main',pathMatch:'full'},
+  {
+    path: '', 
+    redirectTo:'main',
+    pathMatch:'full'
+  },
   {
     path: 'login',
-    component:LoginComponent,
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
     canActivate:[NotLoggedGuard]
   },
-  {
-    path: 'main',
-    component:LandingComponent,
+  { 
+    path: 'main', 
+    loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule),
     canActivate:[AuthGuard]
   },
-  
   { 
     path: 'collaborators', 
     loadChildren: () => import('./pages/collaborators/collaborators.module').then(m => m.CollaboratorsModule),
@@ -37,6 +36,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
     canActivate:[AuthGuard]
   },
+  
+ 
+  
   {path: '**', component:NotFoundComponent},
 ];
 

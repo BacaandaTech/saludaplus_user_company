@@ -8,7 +8,7 @@ import { AuthService } from './shared/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy{
-  title = 'SaludaPlusUserAdmin';
+  title = 'Administrador SaludaPlus';
   auth: boolean;
   private authSubscription: Subscription | undefined;
   constructor(

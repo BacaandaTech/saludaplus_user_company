@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ModalDeleteCollaborator } from '../components/modals/modal-delete-collaborator.component';
 import { ModalConfirm } from '../components/modals/modal-confirm.component';
+import { ModalDeleteUser } from '../components/modals/modal-delete-user.component';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,17 @@ export class ModalService {
         }
         this.bsModalRef = this.modalService.show(ModalConfirm,options);
 
+    }
+
+    openDeleteUserModal(params:any){
+        let options:ModalOptions ={
+            class:"custom-modal modal-dialog-centered",
+            ignoreBackdropClick:true,
+            initialState:{
+                data:params
+            }
+        }
+        this.bsModalRef = this.modalService.show(ModalDeleteUser,options);
     }
     
   

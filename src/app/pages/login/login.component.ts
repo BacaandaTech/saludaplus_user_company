@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EncryptService } from 'src/app/shared/services/encrypt.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private encryptService:EncryptService
   ) {
   }
 
@@ -59,11 +61,8 @@ export class LoginComponent {
   handleSuccesLogin(response:any) {
     localStorage.clear();
     localStorage.setItem("token", response.access_token);
-    localStorage.setItem("user", JSON.stringify(response.user));
-    localStorage.setItem("permissions", JSON.stringify(response.user.permissions));
+    this.encryptService.saveData("user",JSON.stringify(response.user));
+    this.encryptService.saveData("permissions",JSON.stringify(response.user.permissions))
     localStorage.setItem("expires_in", JSON.stringify(Date.now() + response.expires_in ));
-  }
-
-
-  
+  }  
 }

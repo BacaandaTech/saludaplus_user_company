@@ -80,7 +80,6 @@ export class ListUsersComponent {
 
   //Variables for debounce search
   searchValue: string = '';
-  searchDebounce = new Subject<string | any>();
 
   public makingRequest:boolean = false;
 
@@ -105,7 +104,6 @@ export class ListUsersComponent {
   }
 
   ngOnDestroy(): void {
-    this.searchDebounce.unsubscribe();
     this.unsuscribe$.next();
     this.unsuscribe$.unsubscribe()
   }
@@ -117,6 +115,7 @@ export class ListUsersComponent {
 
   onGridReady(params: GridReadyEvent) {
     this.params = params;
+    this.agGrid.gridOptions?.api?.sizeColumnsToFit();
   }
 
   getUsers(query?: string) {

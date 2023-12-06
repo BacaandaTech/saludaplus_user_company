@@ -7,6 +7,7 @@ import { PoliciesListComponent } from './policies-list/policies-list.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     AgGridModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    SharedModule
   ]
 })
 export class PoliciesModule { }

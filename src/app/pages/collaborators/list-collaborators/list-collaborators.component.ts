@@ -87,7 +87,6 @@ export class ListCollaboratorsComponent {
 
   //Variables for debounce search
   searchValue: string = '';
-  searchDebounce = new Subject<string | any>();
 
   public makingRequest:boolean = false;
 
@@ -113,7 +112,6 @@ export class ListCollaboratorsComponent {
   }
 
   ngOnDestroy(): void {
-    this.searchDebounce.unsubscribe();
     this.unsuscribe$.next();
     this.unsuscribe$.unsubscribe()
   }
@@ -125,6 +123,7 @@ export class ListCollaboratorsComponent {
 
   onGridReady(params: GridReadyEvent) {
     this.params = params;
+    this.agGrid.gridOptions?.api?.sizeColumnsToFit();
   }
 
   getCollaborators(query?: string) {

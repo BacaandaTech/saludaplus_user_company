@@ -23,6 +23,9 @@ export class HttpClientService {
         return this.http.post(url, parameters);
       case 'get':
         return this.http.get(url);
+      case 'getParams':
+        console.log(parameters)
+        return this.http.get(url,parameters);
       case 'put':
         return this.http.put(url, parameters);
       case 'delete':

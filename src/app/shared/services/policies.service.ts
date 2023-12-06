@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from './http-client.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -19,22 +20,24 @@ export class PoliciesService {
   }
 
   getPolicies(page: number, per_page?: number, query?: string): Observable<any> {
-    var body: any = {};
+    console.log()
+    let queryParams = new HttpParams();
     if (per_page) {
-      body = {
-        page: page,
-        per_page: per_page
-      }
+      queryParams = queryParams.append("page",page);
+      queryParams = queryParams.append("per_page",per_page);
+      
     } else {
-      body = {
-        page: page,
-      }
+      queryParams = queryParams.append("page",page);
     }
     if (query) {
-      body['query'] = query;
+      queryParams = queryParams.append("query",query);
     }
 
-    return this.http.getQuery('get', 'brand/policies', body).pipe(map((resp) => resp as any));
+    return this.http.getQuery('getParams', 'brand/policies', {params:queryParams}).pipe(map((resp) => resp as any));
 
+  }
+
+  assignPolicy(data:any){
+    return this.http.getQuery('post', 'brand/assign/policy', data).pipe(map((resp) => resp as any));
   }
 }

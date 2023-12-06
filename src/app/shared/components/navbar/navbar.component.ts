@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { getUserData, hasSession } from '../../services/utils.service';
+import { hasSession } from '../../services/utils.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { EncryptService } from '../../services/encrypt.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,24 +12,28 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent {
   has_session = hasSession()
   private authSubscription: Subscription | undefined;
-  user_data: any | undefined = getUserData
-  name_user: string = '';
-  avatar_user: string = ''
+  user_data?: any | undefined;
+  name_user?: string = '';
+  avatar_user?: string = ''
 
 
-  constructor(private auth_service: AuthService) {
-    if (this.user_data()) {
-      this.name_user = this.user_data().meta.name.toUpperCase();
-      this.avatar_user = this.user_data().meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png'
+  constructor(
+    private auth_service: AuthService,
+    private encryptService:EncryptService
+  ) {
+    this.user_data = JSON.parse(this.encryptService.getData('user'));
+    if (this.user_data) {
+      this.name_user = this.user_data.meta.name.toUpperCase();
+      this.avatar_user = this.user_data.meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png'
     }
   }
 
   ngOnInit(): void {
     this.authSubscription = this.auth_service.currentAuth.subscribe((auth_status) => {
       this.has_session = auth_status;
-      if (this.user_data()) { 
-        this.name_user = this.user_data().meta.name.toUpperCase();
-        this.avatar_user = this.user_data().meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png'
+      if (this.user_data) { 
+        this.name_user = this.user_data.meta.name.toUpperCase();
+        this.avatar_user = this.user_data.meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png'
       }
     })
   }

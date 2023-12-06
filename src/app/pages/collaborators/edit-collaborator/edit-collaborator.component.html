@@ -1,8 +1,8 @@
 <article>
     <app-breadcrumb [searchBar]="false" [links]="links" [actionButton]="false"></app-breadcrumb>
     <div class="container-fluid mt-5">
-        <form [formGroup]="frmCreateCollaborator" novalidate enctype="multipart/form-data"
-            (ngSubmit)="createCollaborator()" #myForm="ngForm">
+        <form [formGroup]="frmEditCollaborator" novalidate enctype="multipart/form-data"
+            (ngSubmit)="editCollaborator()" #myForm="ngForm">
             <div class="row">
                 <div class="col-8 offset-2">
                     <div class="card main-card">
@@ -12,11 +12,6 @@
                         <div class="card-body">
 
                             <div class="row d-flex" style="flex-wrap: wrap;">
-                                <div class="col-6 mb-2">
-                                    <label for="first_name" class="form-label">Nombre(s)</label>
-                                    <input type="text" id="first_name" formControlName="first_name"
-                                        class="ms-2 form-control" />
-                                </div>
                                 <div class="col-6 mb-2">
                                     <label for="last_name" class="form-label">Apellido Paterno</label>
                                     <input type="text" id="last_name" formControlName="last_name"
@@ -28,8 +23,9 @@
                                         class="ms-2 form-control" />
                                 </div>
                                 <div class="col-6 mb-2">
-                                    <label for="email" class="form-label">Correo Electronico</label>
-                                    <input type="email" id="email" formControlName="email" class="ms-2 form-control" />
+                                    <label for="first_name" class="form-label">Nombre(s)</label>
+                                    <input type="text" id="first_name" formControlName="first_name"
+                                        class="ms-2 form-control" />
                                 </div>
                                 <div class="col-6 mb-2">
                                     <label for="birthday" class="form-label">Fecha de Nacimiento</label>
@@ -37,8 +33,69 @@
                                         class="ms-2 form-control" bsDatepicker [bsConfig]="datePickerConfig" />
                                 </div>
                                 <div class="col-6 mb-2">
+                                    <label for="gender" class="form-label">Género</label>
+                                    <select name="gender" id="gender" class="ms-2 form-control" formControlName="gender">
+                                        <option value="{{item.value}}" *ngFor="let item of genders">
+                                            {{item.label}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="email" class="form-label">Correo Electronico</label>
+                                    <input type="email" id="email" formControlName="email" class="ms-2 form-control" />
+                                </div>
+                                
+                                <div class="col-6 mb-2">
                                     <label for="department" class="form-label">Departamento</label>
                                     <input type="text" id="department" formControlName="department"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="telephone" class="form-label">Teléfono</label>
+                                    <input type="text" id="telephone" formControlName="telephone"
+                                        class="ms-2 form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row d-flex mt-5" style="flex-wrap: wrap;">
+                                <div class="col-6 mb-2">
+                                    <label for="country" class="form-label">País</label>
+                                    <input type="text" id="country" formControlName="country"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="state" class="form-label">Estado</label>
+                                    <input type="text" id="state" formControlName="state"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="city" class="form-label">Ciudad</label>
+                                    <input type="text" id="city" formControlName="city"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="colony" class="form-label">Colonia</label>
+                                    <input type="text" id="colony" formControlName="colony"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="street" class="form-label">Calle</label>
+                                    <input type="text" id="street" formControlName="street"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="external_number" class="form-label">Número externo</label>
+                                    <input type="text" id="external_number" formControlName="external_number"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="internal_number" class="form-label">Número interno</label>
+                                    <input type="text" id="internal_number" formControlName="internal_number"
+                                        class="ms-2 form-control" />
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <label for="zipcode" class="form-label">Código postal</label>
+                                    <input type="text" id="zipcode" formControlName="zipcode"
                                         class="ms-2 form-control" />
                                 </div>
                             </div>

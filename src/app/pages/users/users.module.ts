@@ -9,13 +9,15 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
     ListUsersComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,
@@ -23,8 +25,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
     AgGridModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationModule.forRoot(),
-    BsDatepickerModule.forRoot(),
+    PaginationModule,
+    BsDatepickerModule,
     SharedModule
   ]
 })

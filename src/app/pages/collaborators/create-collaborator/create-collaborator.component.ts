@@ -31,6 +31,16 @@ export class CreateCollaboratorComponent {
 
   public frmCreateCollaborator: FormGroup;
 
+  public genders = [
+    {
+      label:'Masculino',
+      value:'male'
+    },
+    {
+      label:'Femenino',
+      value:'female'
+    },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +55,16 @@ export class CreateCollaboratorComponent {
       email: ['', [Validators.required, Validators.email]],
       birthday: ['', Validators.required],
       department: ['', Validators.required],
+      gender: ['male', Validators.required],
+      telephone: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      colony: ['', Validators.required],
+      street: ['', Validators.required],
+      external_number: ['', Validators.required],
+      internal_number: ['', Validators.required],
+      zipcode: ['', Validators.required],
     })
   }
 

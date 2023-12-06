@@ -51,7 +51,7 @@ export class UserActionsComponent implements ICellRendererAngularComp {
     }
 
     deleteCollaborator(){
-        
+        this.modalService.openDeleteUserModal(this.params.data);
     }
 
     goToEdit(){
