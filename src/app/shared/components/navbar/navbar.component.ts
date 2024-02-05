@@ -14,17 +14,19 @@ export class NavbarComponent {
   private authSubscription: Subscription | undefined;
   user_data?: any | undefined;
   name_user?: string = '';
-  avatar_user?: string = ''
-
+  avatar_user?: string = '';
+  logo_image?: string = '';
 
   constructor(
     private auth_service: AuthService,
     private encryptService:EncryptService
   ) {
     this.user_data = JSON.parse(this.encryptService.getData('user'));
+    console.log(this.user_data)
     if (this.user_data) {
       this.name_user = this.user_data.meta.name.toUpperCase();
-      this.avatar_user = this.user_data.meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png'
+      this.avatar_user = this.user_data.meta.avatar ? this.user_data().meta.avatar : '../assets/img/logo/avatar-default.png';
+      this.logo_image = this.user_data.brand.logo ? this.user_data().brand.logo : '../assets/img/logo/saluda+.png'
     }
   }
 
