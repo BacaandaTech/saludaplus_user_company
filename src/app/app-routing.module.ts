@@ -3,12 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotLoggedGuard } from './shared/guards/not_logged.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AddPaymentComponent } from './pages/add-payment/add-payment.component';
 
 const routes: Routes = [
   {
     path: '', 
     redirectTo:'main',
     pathMatch:'full'
+  },
+  {
+    path: 'payment-method',
+    component: AddPaymentComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'login',

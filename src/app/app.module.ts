@@ -13,14 +13,19 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
-
-
+import { AddPaymentComponent } from './pages/add-payment/add-payment.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { AmountComponent } from './shared/components/amount/amount.component';
+import { OnlyNumbersDirective } from './only-numbers.directive';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     NotFoundComponent,
+    AddPaymentComponent,
+    LoaderComponent,
+    AmountComponent,
+    OnlyNumbersDirective,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     ToastrModule.forRoot(),
     ModalModule.forChild(),
     BsDropdownModule,
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

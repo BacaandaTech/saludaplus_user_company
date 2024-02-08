@@ -29,3 +29,13 @@
     filter: drop-shadow(0px 6px 3px rgba(0, 0, 0, 0.46));
  }
 
+.card-blue-header {
+    background-color: #5686EA;
+    color: white;
+    padding: 1em;
+}
+.card-blue-container { 
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 2em;
+    overflow: hidden;
+}
