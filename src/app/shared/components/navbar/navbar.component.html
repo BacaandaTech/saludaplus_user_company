@@ -1,9 +1,9 @@
 <nav class="navbar px-5">
   <span class="navbar-brand mb-0 cursor-pointer" [routerLink]='["/main"]'>
-    <img src="assets/img/logo/RI.png" alt="realinver-realidades-de-inversion">
+    <img [src]="logo_image" alt="realinver-realidades-de-inversion">
   </span>
   <div class="d-flex align-items-center color-blue" *ngIf="has_session">
-    <h3 class="m-0">HOLA, {{name_user}}!</h3>
+    <h3 class="m-0">¡HOLA, {{name_user}}!</h3>
     <span dropdown class="container-avatar-default-navbar" placement="bottom left" style="position: relative;">
       <img [src]="avatar_user" id="button-basic" dropdownToggle type="button" aria-controls="dropdown-basic"/>
       <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="button-basic">
