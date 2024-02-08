@@ -1,0 +1,28 @@
+.amount-component {
+    .button-amount {
+        background-color: #5686EA;
+        color: white;
+        border-radius: 0.5em;
+        // padding: 0.5em;
+        border: none;
+        width: 40px;
+        height: 40px;
+        margin: 0 0.5em;
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    .input-amount {
+        height: 40px;
+        border: 1px solid rgba(128, 128, 128, 0.093);
+        box-shadow: rgba(0, 0, 0, 0.492) 1.95px 1.95px 2.6px;
+        border-radius: 0.5em;
+        width: 100px;
+        padding: 0.5em;
+        -webkit-appearance: none;
+        margin: 0;
+        font-size: 20px;
+        font-weight: bolder;
+        outline: none;
+    }
+}

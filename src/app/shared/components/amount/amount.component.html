@@ -1,0 +1,5 @@
+<div class="amount-component">
+    <button class="button-amount" (click)="lessAction()">-</button>
+    <input type="text" class="input-amount" appOnlyNumbers [(ngModel)]="membership.amount" (input)="onInput($event)">
+    <button class="button-amount" (click)="plusAction()">+</button>
+</div>
