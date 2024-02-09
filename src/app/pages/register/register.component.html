@@ -1,0 +1,184 @@
+<section>
+    <div class="row w-100 d-flex justify-content-center mt-4">
+        <div class="col-10">
+            <form [formGroup]="owner_form" (ngSubmit)="nextTab()" *ngIf="tabs_model === 0">
+                <h1 class="mb-3">CREAR CUENTA</h1>
+
+                <h3>Titular</h3>
+                <div class="row">
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Nombre*</label>
+                            <input type="text" placeholder="Tania" class="card-number" formControlName="name"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Apellido paterno*</label>
+                            <input type="text" placeholder="Velazquez" class="card-number" formControlName="lastname"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Apellido materno*</label>
+                            <input type="text" placeholder="Velazquez" class="card-number" formControlName="second_lastname"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <label for="card-number">Naciemiento*</label>
+                        <input type="text" class="card-number" placeholder="Seleccione una fecha" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="birthday">
+                    </div>
+
+
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Correo electrónico*</label>
+                            <input type="text" placeholder="Velazquez@ejemplo.com" class="card-number" formControlName="email"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Contraseña*</label>
+                            <input type="password" class="card-number" formControlName="password"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Telefono*</label>
+                            <input type="text" placeholder="00-123-1234" class="card-number" formControlName="phone"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Género*</label>
+                            <input type="text" placeholder="ejemplo" class="card-number" formControlName="gender"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Departamento*</label>
+                            <input type="text" placeholder="ejemplo" class="card-number" formControlName="department"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-login btn-rounded float-end" [disabled]="owner_form.invalid">Siguiente</button>
+            </form>
+
+            <div *ngIf="tabs_model === 1">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Datos</h3>
+                    <a (click)="backTab()" class="going-back-button">< atras</a>
+                </div>
+                
+                <div class="d-flex w-100 mb-4">
+                    <div class="form-check me-3">
+                      <input class="form-check-input" value="moral" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="type_person">
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Persona moral
+                      </label>
+                    </div>
+                    <div class="form-check me-3">
+                      <input class="form-check-input" value="physic" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="type_person">
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        Persona Física
+                      </label>
+                    </div>
+                </div>
+                <form class="row" *ngIf="type_person === 'moral';else else_block" [formGroup]="info_moral_form" (ngSubmit)="nextTab()">
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Empresa*</label>
+                            <input type="text" placeholder="Mi empresa" class="card-number" formControlName="company"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">RFC*</label>
+                            <input type="text" placeholder="ABECDEFF3323" class="card-number" formControlName="rfc"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Imagen (opcional)</label>
+                            <input *ngIf="!info_moral_form.value.logo;else block_else" type="file" placeholder="Agregar archivo" class="card-number" formControlName="logo"/>
+                            <ng-template #block_else>
+                                <div class="card-number">Imagen cargada</div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Sitio Web (opcional)</label>
+                            <input type="text" placeholder="miempresa.com" class="card-number" formControlName="web" />
+                        </div>
+                    </div>
+                    <button class="btn btn-login btn-rounded float-end" type="submit" [disabled]="info_moral_form.invalid">Siguiente</button>
+                </form>
+                <ng-template #else_block>
+                    <form class="row" [formGroup]="info_physic_form" (ngSubmit)="nextTab()">
+                        <div class="col-6">
+                            <label for="card-number">RFC*</label>
+                            <input type="text" placeholder="ABCDEFHI12345" class="card-number mb-4" formControlName="rfc"/>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" disabled>
+                                <label class="form-check-label" for="flexCheckIndeterminate">
+                                    Soy beneficiario
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn btn-login btn-rounded float-end" type="submit" [disabled]="info_physic_form.invalid">Siguiente</button>
+                    </form>
+                </ng-template>
+            </div>
+
+            <div *ngIf="tabs_model === 2">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3>Dirección</h3>
+                    <a (click)="backTab()" class="going-back-button">< atras</a>
+
+                </div>
+    
+                <form class="row w-100" [formGroup]="address_form" (ngSubmit)="createAccount()">
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Calle*</label>
+                            <input type="text" placeholder="Calle" class="card-number" formControlName="street"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Número*</label>
+                            <input type="text" placeholder="Número" class="card-number" formControlName="number"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Colonia*</label>
+                            <input type="text" placeholder="Colonia" class="card-number" formControlName="colony"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Ciudad*</label>
+                            <input type="text" placeholder="Ciudad" class="card-number" formControlName="city"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Estado*</label>
+                            <input type="text" placeholder="Estado" class="card-number" formControlName="state"/>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="">
+                            <label for="card-number">Código postal*</label>
+                            <input type="text" placeholder="Código postal" class="card-number" formControlName="cp"/>
+                        </div>
+                    </div>
+                    <button class="btn btn-login btn-rounded float-end" type="submit" [disabled]="address_form.invalid">Crear cuenta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

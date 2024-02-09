@@ -4,5 +4,8 @@
             <app-navbar></app-navbar>
         </header>
     </ng-template>
+    <nav *ngIf="!auth">
+        <img src="../assets/img/logo/saluda+.png" class="realinver-realidades-de-inversion">
+    </nav>
     <router-outlet></router-outlet>
 </section>

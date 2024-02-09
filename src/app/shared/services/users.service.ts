@@ -54,4 +54,7 @@ export class usersService {
   deleteUser(userId:string){
     return this.http.getQuery('delete', `brand/collaborator/${userId}`,null).pipe(map((resp) => resp as any));
   }
+  registerUser(form_data: FormData) {
+    return this.http.getQuery('post', 'user/register/', form_data).pipe(map((resp) => resp as any));
+  }
 }
