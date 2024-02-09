@@ -28,36 +28,36 @@ export class RegisterComponent {
   }
 
   public owner_form = new FormGroup({
-    name: new FormControl('Hola', Validators.required),
-    lastname: new FormControl('hola', Validators.required),
-    second_lastname: new FormControl('hola', Validators.required),
-    password: new FormControl('pass2018', [Validators.required, Validators.minLength(4)]),
-    email: new FormControl('prueba1@prueba.com', [Validators.required, Validators.email]),
-    phone: new FormControl('27772662', [Validators.required]),
-    gender: new FormControl('masculino', Validators.required),
-    department: new FormControl('claro', Validators.required),
+    name: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
+    second_lastname: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required]),
+    gender: new FormControl('', Validators.required),
+    department: new FormControl('', Validators.required),
     birthday: new FormControl('', Validators.required)
   });
 
   public info_moral_form = new FormGroup({
-    company: new FormControl('Hola', Validators.required),
-    rfc: new FormControl('hola', Validators.required),
+    company: new FormControl('', Validators.required),
+    rfc: new FormControl('', Validators.required),
     logo: new FormControl(''),
     web: new FormControl('')
   });
 
   public info_physic_form = new FormGroup({
-    rfc: new FormControl('hola', Validators.required),
+    rfc: new FormControl('', Validators.required),
     is_beneficiary: new FormControl(''),
   });
 
   public address_form = new FormGroup({
-    street: new FormControl('Hola', Validators.required),
-    number: new FormControl('hola', Validators.required),
-    colony: new FormControl('hola', Validators.required),
-    city: new FormControl('Ciudad de mexico', Validators.required),
-    state: new FormControl('27772662', Validators.required),
-    cp: new FormControl('masculino', Validators.required),
+    street: new FormControl('', Validators.required),
+    number: new FormControl('', Validators.required),
+    colony: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    cp: new FormControl('', Validators.required),
   });
 
   nextTab(): void {
@@ -66,7 +66,9 @@ export class RegisterComponent {
   backTab(): void {
     this.tabs_model -= 1;
   }
- 
+  handleFileInput(event: any): void {
+    this.logo = event.target.files[0];
+  }
   createAccount(): void {
     const form_data: FormData = new FormData();
 
@@ -79,14 +81,12 @@ export class RegisterComponent {
     form_data.append('gender', this.owner_form.value.gender ?? '');
     form_data.append('department', this.owner_form.value.department ?? '');
     
-    console.log(new Date(this.owner_form.value.birthday ?? '').toLocaleDateString());
     form_data.append('birthday', new Date(this.owner_form.value.birthday ?? '').toLocaleDateString());
   
     if (this.type_person === 'moral') {
       form_data.append('brand_name', this.info_moral_form.value.company ?? '');
       form_data.append('rfc', this.info_moral_form.value.rfc ?? '');
-      if (this.info_moral_form.value.logo) form_data.append('logo', this.info_moral_form.value.logo ?? '');
-      
+      if (this.logo) form_data.append('logo', this.logo);
       if (this.info_moral_form.value.web) form_data.append('url', this.info_moral_form.value.web ?? '');
     } else {
       form_data.append('rfc', this.info_physic_form.value.rfc ?? '');

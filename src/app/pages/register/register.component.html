@@ -100,7 +100,7 @@
                     <div class="col-6 mb-4">
                         <div class="">
                             <label for="card-number">Imagen (opcional)</label>
-                            <input *ngIf="!info_moral_form.value.logo;else block_else" type="file" placeholder="Agregar archivo" class="card-number" formControlName="logo"/>
+                            <input *ngIf="!logo;else block_else" type="file" placeholder="Agregar archivo" class="card-number" (change)="handleFileInput($event)"/>
                             <ng-template #block_else>
                                 <div class="card-number">Imagen cargada</div>
                             </ng-template>
