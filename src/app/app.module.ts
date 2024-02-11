@@ -17,6 +17,9 @@ import { AddPaymentComponent } from './pages/add-payment/add-payment.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { AmountComponent } from './shared/components/amount/amount.component';
 import { OnlyNumbersDirective } from './only-numbers.directive';
+import { RegisterComponent } from './pages/register/register.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +29,7 @@ import { OnlyNumbersDirective } from './only-numbers.directive';
     LoaderComponent,
     AmountComponent,
     OnlyNumbersDirective,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,9 +37,11 @@ import { OnlyNumbersDirective } from './only-numbers.directive';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     ModalModule.forChild(),
     BsDropdownModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -7,13 +7,14 @@ export class AuthGuard implements CanActivate {
         private router: Router,
     ) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {        
         const currentUser = localStorage.getItem('token');
         if (currentUser) {
             // logged in so return true
             return true;
         }
-
+        if (route.routeConfig?.path === 'payment-method' && !currentUser) localStorage.setItem('to_buy', JSON.stringify(route.queryParams))
+        
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
