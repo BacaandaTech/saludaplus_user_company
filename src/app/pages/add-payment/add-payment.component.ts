@@ -61,6 +61,7 @@ export class AddPaymentComponent {
   async ngOnInit() {
 
     this.setMembershipsFromParams()
+    this.getCustomer();
 
     this.stripe = await loadStripe(environment.STRIPE_PUBLIC);
     const elements = this.stripe?.elements();
@@ -127,6 +128,11 @@ export class AddPaymentComponent {
         console.warn(e.message)
       }
     }
+  }
+
+  getCustomer():void {
+    this.stripe_service.getCustomerStripe().subscribe(() => {
+    })
   }
   getTotal() {
     let total: number = 0

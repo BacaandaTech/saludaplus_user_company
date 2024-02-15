@@ -81,7 +81,7 @@ export class RegisterComponent {
     form_data.append('gender', this.owner_form.value.gender ?? '');
     form_data.append('department', this.owner_form.value.department ?? '');
     
-    form_data.append('birthday', new Date(this.owner_form.value.birthday ?? '').toLocaleDateString());
+    form_data.append('birthday', new Date(this.owner_form.value.birthday ?? '').toLocaleDateString('en-US'));
   
     if (this.type_person === 'moral') {
       form_data.append('brand_name', this.info_moral_form.value.company ?? '');
@@ -90,6 +90,8 @@ export class RegisterComponent {
       if (this.info_moral_form.value.web) form_data.append('url', this.info_moral_form.value.web ?? '');
     } else {
       form_data.append('rfc', this.info_physic_form.value.rfc ?? '');
+      const fullname = `${this.owner_form.value.name} ${this.owner_form.value.lastname} ${this.owner_form.value.second_lastname}`
+      form_data.append('brand_name', fullname);
     }
 
     form_data.append('street', this.address_form.value.street ?? '');

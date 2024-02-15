@@ -18,4 +18,7 @@ export class StripeService {
   addPaymentMethod(data: FormData): Observable<any> {
     return this.http.getQuery('post', 'payment-gateway/add-source/', data).pipe(map((resp) => resp as any));
   }
+  getCustomerStripe(): Observable<any> {
+    return this.http.getQuery('get', 'payment-gateway/get-customer/', {}).pipe(map((resp) => resp as any));
+  }
 }

@@ -49,7 +49,14 @@ export class LoginComponent {
     .subscribe({
       next: (response: any) => {
         this.handleSuccesLogin(response);
-        this.router.navigate(['/main']);
+
+        const to_buy = localStorage.getItem('to_buy');
+        if (to_buy) {          
+          const query_params = JSON.parse(to_buy)
+          this.router.navigate(['/payment-method'], {queryParams: query_params});
+        } else {
+          this.router.navigate(['/main']);
+        }
         this.authService.setCurrentUser(true);
       },
       error: (error:HttpErrorResponse) => {
@@ -59,7 +66,7 @@ export class LoginComponent {
   }
 
   handleSuccesLogin(response:any) {
-    localStorage.clear();
+    if (!localStorage.getItem('to_buy')) localStorage.clear();
     localStorage.setItem("token", response.access_token);
     this.encryptService.saveData("user",JSON.stringify(response.user));
     this.encryptService.saveData("permissions",JSON.stringify(response.user.permissions))

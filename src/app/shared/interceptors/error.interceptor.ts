@@ -16,7 +16,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             catchError((error:HttpErrorResponse) => {
-                this.toast.error(error.error.message, 'Error',CONFIG_TOAST);
+                let text = '';
+                if (error.error.errors) {
+                    for (let prop in error.error.errors) {
+                        text += error.error.errors[prop].join('\n')
+                    }
+                }
+                this.toast.error(`${error.error.message}. \n ${text}`, 'Error',CONFIG_TOAST);
                 return throwError(() => error);
             }),
         )
