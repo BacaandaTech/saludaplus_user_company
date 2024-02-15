@@ -30,8 +30,13 @@
 .navbar {
     height: 100px;
     background-color: white;
+    display: flex;
+    justify-content: end;
+    
     
     .navbar-brand {
+        position: absolute;
+        left: 3em;
         img {
             width: 170px;
         }
