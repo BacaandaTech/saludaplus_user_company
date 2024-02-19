@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { StripeService } from 'src/app/shared/services/stripe.service';
 import { IMembership } from 'src/app/shared/interfaces/membership.interface';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-payment',
@@ -46,6 +47,13 @@ export class AddPaymentComponent {
       
     }
   ]
+  public type_payment: String = 'oxxo'
+
+  public oxxo_form = new FormGroup({
+    name: new FormControl('Gerardo de jesus', Validators.required),
+    email: new FormControl('prueba@prueba.com', [Validators.required, Validators.email]),
+  });
+
   private status_card: any = {
     cardNumber: false,
     cardExpiry: false,
@@ -130,6 +138,42 @@ export class AddPaymentComponent {
     }
   }
 
+  buyOxxo(): void {
+    this.loader = true;
+
+    this.stripe_service.buySuscription(this.getFormDataMemberships(), true).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          console.log(response, 'success')
+          this.collectDetailsOxxo(response)
+        } else {
+          console.log('en el else')
+          this.loader = false; 
+        }
+      },
+      error: (err) => {
+        console.log(err, 'aqui un error')
+      }
+    });
+
+  }
+
+  async collectDetailsOxxo(response: any): Promise<void> {
+    console.log('entre')
+    const result = await this.stripe?.confirmOxxoPayment(
+      response.data.client_secret,
+      {
+        payment_method: {
+          billing_details: {
+            name: this.oxxo_form.value.name ?? '',
+            email: this.oxxo_form.value.email ?? '',
+          },
+        },
+      });
+    this.loader = false;
+    console.log(result)
+  }
+
   getCustomer():void {
     this.stripe_service.getCustomerStripe().subscribe(() => {
     })
@@ -176,10 +220,13 @@ export class AddPaymentComponent {
 
   handleDisabledButton() {
     const status = Object.values(this.status_card);
-    status.push(this.cp.length > 0)
-    status.push(this.name_user.length > 0)
-    status.push(this.memberships.filter((i) => i.amount > 0).length > 0)
-
+    if (this.type_payment === 'card') {
+      status.push(this.cp.length > 0)
+      status.push(this.name_user.length > 0)
+      status.push(this.memberships.filter((i) => i.amount > 0).length > 0)
+    } else if (this.type_payment === 'oxxo') {
+      return !this.oxxo_form.invalid
+    }
     return status.every((i) => i === true)
   }
   
