@@ -16,7 +16,7 @@ export class RegisterComponent {
   public type_person: string = 'moral';
   public user: any = {};
   public logo: File | null;
-
+  public loader: boolean = false;
   
   constructor(
     private user_service: usersService, 
@@ -101,11 +101,11 @@ export class RegisterComponent {
     form_data.append('state', this.address_form.value.state ?? '');
     form_data.append('zipcode', this.address_form.value.cp ?? '');
     form_data.append('register_external', 'true');
-
+    this.loader = true;
     this.user_service.registerUser(form_data).subscribe({
       next: (response: any) => {
         this.handleSuccesLogin(response);
-
+        this.loader = false;
         const to_buy = localStorage.getItem('to_buy');
         if (to_buy) {
           const query_params = JSON.parse(to_buy)
@@ -117,7 +117,7 @@ export class RegisterComponent {
         this.authService.setCurrentUser(true);
       },
       error: (error:HttpErrorResponse) => {
-        console.log(error.error.message)
+        this.loader = false;
       }
     })
   }

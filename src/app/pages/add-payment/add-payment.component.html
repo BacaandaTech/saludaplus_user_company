@@ -6,9 +6,15 @@
 
     <div class="d-flex w-100 mb-4">
       <div class="form-check me-3">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+        <input class="form-check-input" value="card" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="type_payment">
         <label class="form-check-label" for="flexRadioDefault1">
           Tarjeta de crédito
+        </label>
+      </div>
+      <div class="form-check me-3">
+        <input class="form-check-input" value="oxxo" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="type_payment">
+        <label class="form-check-label" for="flexRadioDefault2">
+          Oxxo
         </label>
       </div>
       <div class="form-check me-3">
@@ -17,39 +23,50 @@
           Transferencia
         </label>
       </div>
-      <div class="form-check">
-        <input class="form-check-input" disabled type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-        <label class="form-check-label" for="flexRadioDefault2">
-          Oxxo
-        </label>
+    </div>
+    
+    <div *ngIf="type_payment === 'card';else oxxo_template">
+      <div class="mb-4">
+          <label for="card-number">Numero de tarjeta</label>
+          <div id="card" class="card-number"></div>
+      </div>
+    
+      <div class="mb-4">
+          <label for="name_user">Nombre del titular</label>
+          <input id="name_user" class="card-number w-100" type="text" [(ngModel)]="name_user" />
+      </div>
+    
+      <div class="row mb-4">
+          <div class="col-6">
+              <label for="exp">fecha de vencimiento</label>
+              <div id="exp" class="card-number"></div>
+          </div>
+          <div class="col-6">
+              <label for="cvv">CVV</label>
+              <div id="cvv" class="card-number"></div>
+          </div>
+      </div>
+    
+      <div class="mb-4">
+          <label for="cp">Código postal</label>
+          <input id="cp" class="card-number w-100" type="text" [(ngModel)]="cp"/>
       </div>
     </div>
-  
-    <div class="mb-4">
-        <label for="card-number">Numero de tarjeta</label>
-        <div id="card" class="card-number"></div>
-    </div>
-  
-    <div class="mb-4">
-        <label for="name_user">Nombre del titular</label>
-        <input id="name_user" class="card-number w-100" type="text" [(ngModel)]="name_user" />
-    </div>
-  
-    <div class="row mb-4">
-        <div class="col-6">
-            <label for="exp">fecha de vencimiento</label>
-            <div id="exp" class="card-number"></div>
+
+    <ng-template #oxxo_template>
+      <h1>OXXO</h1>
+
+      <form [formGroup]="oxxo_form" class="row">
+        <div class="col-12 mb-4">
+          <label for="card-number">Nombre*</label>
+          <input type="text" placeholder="Mi empresa" class="card-number w-100" formControlName="name"/>
         </div>
-        <div class="col-6">
-            <label for="cvv">CVV</label>
-            <div id="cvv" class="card-number"></div>
+        <div class="col-12 mb-4">
+          <label for="card-number">Email*</label>
+          <input type="text" placeholder="ABECDEFF3323" class="card-number w-100" formControlName="email"/>
         </div>
-    </div>
-  
-    <div class="mb-4">
-        <label for="cp">Código postal</label>
-        <input id="cp" class="card-number w-100" type="text" [(ngModel)]="cp"/>
-    </div>
+      </form>
+    </ng-template>
   </div>
 
   <div class="col-12 col-lg-6 mb-4">
@@ -58,14 +75,19 @@
         <h2>RESUMEN</h2>
       </div>
       <div class="p-4 bg-white">
-        <div *ngFor="let item of memberships" class="mb-5 d-flex align-items-center w-100 justify-content-between">
+        <div *ngFor="let item of memberships; let i = index" class="d-flex align-items-center w-100 justify-content-between" [ngClass]="{'mb-5': i < memberships.length - 1}">
           <div>
 
-            <h5>{{item.name}}</h5>
+            <h5>{{item.name}}{{i}}</h5>
             <h3>{{item.alternative_name}}</h3>
             <h5>{{item.per_price}}</h5>
           </div>
           <app-amount [membership]="item"></app-amount>
+        </div>
+
+        <div class="col-12 mt-4 mb-5">
+          <label for="card-number">Codigo del vendedor</label>
+          <input type="text" placeholder="" class="card-number w-100" [(ngModel)]="reference_seller"/>
         </div>
 
         <div class="d-flex justify-content-between mb-4">
@@ -82,7 +104,7 @@
         </div>
       </div>
     </div>
-    <button id="button" (click)="handleBuy()" [disabled]="!handleDisabledButton()" class="btn btn-login btn-rounded w-100">REALIZAR COMPRA</button>
+    <button id="button" (click)="type_payment === 'card' ? handleBuy() : buyOxxo()" [disabled]="!handleDisabledButton()" class="btn btn-login btn-rounded w-100">REALIZAR COMPRA</button>
   </div>
 </div>
 

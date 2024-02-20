@@ -12,8 +12,8 @@ export class StripeService {
     private http: HttpClientService
   ) { }
 
-  buySuscription(data: FormData): Observable<any> {
-    return this.http.getQuery('post', 'payment-gateway/subscribe-policies', data).pipe(map((resp) => resp as any));
+  buySuscription(data: FormData, oxxo = false): Observable<any> {
+    return this.http.getQuery('post', `payment-gateway/${oxxo ? 'payment-oxxo' : 'subscribe-policies'}`, data).pipe(map((resp) => resp as any));
   }
   addPaymentMethod(data: FormData): Observable<any> {
     return this.http.getQuery('post', 'payment-gateway/add-source/', data).pipe(map((resp) => resp as any));

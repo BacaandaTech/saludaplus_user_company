@@ -17,7 +17,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError((error:HttpErrorResponse) => {
                 let text = '';
-                if (error.error.errors) {
+                console.log(error, 'aqui')
+                if (error.error.errors && typeof error.error.errors !== 'string') {
                     for (let prop in error.error.errors) {
                         text += error.error.errors[prop].join('\n')
                     }
