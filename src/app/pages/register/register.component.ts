@@ -58,6 +58,7 @@ export class RegisterComponent {
     city: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     cp: new FormControl('', Validators.required),
+    tyc: new FormControl(false, Validators.requiredTrue)
   });
 
   nextTab(): void {

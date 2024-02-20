@@ -68,7 +68,7 @@
             <div *ngIf="tabs_model === 1">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3>Datos</h3>
-                    <a (click)="backTab()" class="going-back-button">< atras</a>
+                    <a (click)="backTab()" class="going-back-button">< atrás</a>
                 </div>
                 
                 <div class="d-flex w-100 mb-4">
@@ -136,7 +136,7 @@
             <div *ngIf="tabs_model === 2">
                 <div class="d-flex justify-content-between mb-3">
                     <h3>Dirección</h3>
-                    <a (click)="backTab()" class="going-back-button">< atras</a>
+                    <a (click)="backTab()" class="going-back-button">< atrás</a>
 
                 </div>
     
@@ -176,6 +176,13 @@
                             <label for="card-number">Código postal*</label>
                             <input type="text" placeholder="Código postal" class="card-number" formControlName="cp"/>
                         </div>
+                    </div>
+                    <div class="col-12 form-check mb-4">
+                        <input class="form-check-input" type="checkbox" [value]="false" id="flexCheckIndeterminate" formControlName="tyc">
+                        <label class="form-check-label" for="flexCheckIndeterminate">
+                            Al hacer clic en "crear cuenta" aceptas las políticas de privacidad y términos y condiciones.
+                            <a target="_blank" href="https://saludaplus.com/aviso-de-privacidad/">Aviso de privacidad</a> y <a target="_blank" href="https://saludaplus.com/politicas-de-cancelacion/">Políticas de cancelación</a>
+                        </label>
                     </div>
                     <button class="btn btn-login btn-rounded float-end" type="submit" [disabled]="address_form.invalid">Crear cuenta</button>
                 </form>
