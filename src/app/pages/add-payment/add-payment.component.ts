@@ -5,6 +5,8 @@ import { StripeService } from 'src/app/shared/services/stripe.service';
 import { IMembership } from 'src/app/shared/interfaces/membership.interface';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { CONFIG_TOAST } from '../../shared/interfaces/utils.interface';
 
 @Component({
   selector: 'app-add-payment',
@@ -22,6 +24,8 @@ export class AddPaymentComponent {
   public cp: string;
   public loader: boolean = false;
   public success_transaction: boolean = false;
+  public reference_seller: string = '';
+
   public memberships: IMembership[] = [
     {
       name: 'CLUB SALUDA+',
@@ -44,14 +48,14 @@ export class AddPaymentComponent {
       amount: 0,
       has_year: true,
       value: 1890,
-      
     }
   ]
-  public type_payment: String = 'oxxo'
+
+  public type_payment: String = 'card'
 
   public oxxo_form = new FormGroup({
-    name: new FormControl('Gerardo de jesus', Validators.required),
-    email: new FormControl('prueba@prueba.com', [Validators.required, Validators.email]),
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
 
   private status_card: any = {
@@ -60,7 +64,7 @@ export class AddPaymentComponent {
     cardCvc: false,
   }
 
-  constructor(private stripe_service: StripeService, private route: ActivatedRoute) {
+  constructor(private stripe_service: StripeService, private route: ActivatedRoute, private toast: ToastrService) {
     this.stripe = null;
     this.name_user = ''
     this.cp = '';
@@ -117,22 +121,33 @@ export class AddPaymentComponent {
           form_data.append('token_card', result.source?.id ? result.source?.id : '');
           this.loader = true;
   
-          this.stripe_service.addPaymentMethod(form_data).subscribe((response) => {
-            if (response.status === 200) {
-              this.stripe_service.buySuscription(this.getFormDataMemberships()).subscribe((response_buy) => {
-                if (response_buy.status === 200) {
-                  this.loader = true;
-                  this.success_transaction = true
-                } else {
-                  this.loader = false; 
-                }
-              })
-            } else {
+          this.stripe_service.addPaymentMethod(form_data).subscribe({
+            next: (response) => {
+              if (response.status === 200) {
+                this.stripe_service.buySuscription(this.getFormDataMemberships()).subscribe({
+                  next: (response_buy) => {
+                    if (response_buy.status === 200) {
+                      this.loader = true;
+                      this.success_transaction = true
+                    } else {
+                      this.loader = false; 
+                    }
+                  },
+                  error: () => {
+                    this.loader = false; 
+                  }
+                })
+              } else {
+                this.loader = false;
+              }
+            },
+            error: () => {
               this.loader = false;
             }
           })
         }
       } catch (e: any) {
+        this.loader = false;
         console.warn(e.message)
       }
     }
@@ -144,22 +159,19 @@ export class AddPaymentComponent {
     this.stripe_service.buySuscription(this.getFormDataMemberships(), true).subscribe({
       next: (response) => {
         if (response.status === 200) {
-          console.log(response, 'success')
           this.collectDetailsOxxo(response)
         } else {
-          console.log('en el else')
           this.loader = false; 
         }
       },
       error: (err) => {
-        console.log(err, 'aqui un error')
+        this.loader = false; 
       }
     });
 
   }
 
   async collectDetailsOxxo(response: any): Promise<void> {
-    console.log('entre')
     const result = await this.stripe?.confirmOxxoPayment(
       response.data.client_secret,
       {
@@ -170,8 +182,11 @@ export class AddPaymentComponent {
           },
         },
       });
+    
+    if (result?.error) {
+      this.toast.error(result.error.message, 'Error',CONFIG_TOAST);
+    }
     this.loader = false;
-    console.log(result)
   }
 
   getCustomer():void {
@@ -212,6 +227,9 @@ export class AddPaymentComponent {
       if (membership?.has_month) {  
         form_data_buy.append('has_year', 'true');
         form_data_buy.append('quantity_year', membership.amount.toString());
+      } 
+      if (this.reference_seller.length > 0) {
+        form_data_buy.append('reference_seller_id', this.reference_seller);
       }
 
     })
@@ -225,7 +243,7 @@ export class AddPaymentComponent {
       status.push(this.name_user.length > 0)
       status.push(this.memberships.filter((i) => i.amount > 0).length > 0)
     } else if (this.type_payment === 'oxxo') {
-      return !this.oxxo_form.invalid
+      return !this.oxxo_form.invalid && this.memberships.filter((i) => i.amount > 0).length > 0
     }
     return status.every((i) => i === true)
   }
