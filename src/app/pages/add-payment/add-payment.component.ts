@@ -29,29 +29,38 @@ export class AddPaymentComponent {
   public memberships: IMembership[] = [
     {
       name: 'CLUB SALUDA+',
-      price: '$2,268 anual',
+      price: '$2,631 anual',
       alternative_name: 'Anual 2 pagos',
       per_price: '$189 MXM / mes',
       frequency_payment: '2 pagos de $1,134',
       frequency_payment_down_text: 'Mes 1 y mes 7',
       amount: 0,
       has_month: true,
-      value: 1134,
+      value: 1316,
     },
     {
       name: 'CLUB SALUDA+',
-      price: '$1,890 anual',
+      price: '$2,192 anual',
       alternative_name: 'Anual 1 pago',
       per_price: '2 meses gratis',
       frequency_payment: '1 solo pago',
       frequency_payment_down_text: '$157.5 MXM / mes',
       amount: 0,
       has_year: true,
-      value: 1890,
+      value: 2193,
     }
   ]
 
-  public type_payment: String = 'card'
+  private _type_payment: String = 'card'
+  
+  public get type_payment(): String {
+    return this._type_payment;
+  }
+  
+  public set type_payment(value: String) {
+    this._type_payment = value;
+    if (value === 'card') this.loadStripeInputs()
+  }
 
   public oxxo_form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -70,14 +79,33 @@ export class AddPaymentComponent {
     this.cp = '';
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
     this.setMembershipsFromParams()
     this.getCustomer();
+    this.loadStripeInputs()
+  }
 
+  async loadStripeInputs(): Promise<void> {
     this.stripe = await loadStripe(environment.STRIPE_PUBLIC);
-    const elements = this.stripe?.elements();
-    
+    this.waitForElementsToLoad().then((elements) => {
+      this.createAndMountElements(elements);
+    });
+  }
+  
+  waitForElementsToLoad(): Promise<any> {
+    return new Promise((resolve) => {
+      const checkElements = setInterval(() => {
+        const elements = this.stripe?.elements();
+        if (elements) {
+          clearInterval(checkElements);
+          resolve(elements);
+        }
+      }, 100);
+    });
+  }
+  
+  createAndMountElements(elements: any): void {
     this.card = elements?.create('cardNumber');
     this.exp = elements?.create('cardExpiry');
     this.cvv = elements?.create('cardCvc');
@@ -85,11 +113,13 @@ export class AddPaymentComponent {
     this.card?.mount('#card')
     this.exp?.mount('#exp');
     this.cvv?.mount('#cvv');
-
+  
     this.card?.on('change', (event: any) => this.handleCardChange(event, 'card-errors'));
     this.exp?.on('change', (event: any) => this.handleCardChange(event, 'exp-errors'));
     this.cvv?.on('change', (event: any) => this.handleCardChange(event, 'cvc-errors'));
   }
+  
+
   setMembershipsFromParams(): void {
     const query_params: any = this.route.snapshot.queryParams;
     const membership_month = this.memberships.find(i => i.has_month)
@@ -198,7 +228,7 @@ export class AddPaymentComponent {
     this.memberships.forEach(membership => {
       total += membership.amount * membership.value
     });
-    return total;
+    return Math.round(total);  
   }
   getNextTotalPaymentCase() {
     let total: number = 0
@@ -207,7 +237,7 @@ export class AddPaymentComponent {
     months.forEach(membership => {
       total += membership.amount * membership.value
     });
-    return total;
+    return Math.round(total);
   }
   separatebycomma(num: string) {
     if (num === null) return '0'
@@ -220,11 +250,11 @@ export class AddPaymentComponent {
     const memberships_to_buy: IMembership[] = this.memberships.filter(i => i.amount > 0);
 
     memberships_to_buy.forEach((membership) => {
-      if (membership?.has_year) {
+      if (membership?.has_month) {
         form_data_buy.append('has_month', 'true');
         form_data_buy.append('quantity_month', membership.amount.toString());
       } 
-      if (membership?.has_month) {  
+      if (membership?.has_year) {  
         form_data_buy.append('has_year', 'true');
         form_data_buy.append('quantity_year', membership.amount.toString());
       } 

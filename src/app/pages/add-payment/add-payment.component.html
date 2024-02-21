@@ -33,7 +33,7 @@
     
       <div class="mb-4">
           <label for="name_user">Nombre del titular</label>
-          <input id="name_user" class="card-number w-100" type="text" [(ngModel)]="name_user" />
+          <input id="name_user" placeholder="Juan Perez" class="card-number w-100" type="text" [(ngModel)]="name_user" />
       </div>
     
       <div class="row mb-4">
@@ -49,21 +49,19 @@
     
       <div class="mb-4">
           <label for="cp">Código postal</label>
-          <input id="cp" class="card-number w-100" type="text" [(ngModel)]="cp"/>
+          <input id="cp" placeholder="99933" class="card-number w-100" type="text" [(ngModel)]="cp"/>
       </div>
     </div>
 
     <ng-template #oxxo_template>
-      <h1>OXXO</h1>
-
       <form [formGroup]="oxxo_form" class="row">
         <div class="col-12 mb-4">
           <label for="card-number">Nombre*</label>
-          <input type="text" placeholder="Mi empresa" class="card-number w-100" formControlName="name"/>
+          <input type="text" placeholder="Juan Perez" class="card-number w-100" formControlName="name"/>
         </div>
         <div class="col-12 mb-4">
           <label for="card-number">Email*</label>
-          <input type="text" placeholder="ABECDEFF3323" class="card-number w-100" formControlName="email"/>
+          <input type="text" placeholder="email@emai.com" class="card-number w-100" formControlName="email"/>
         </div>
       </form>
     </ng-template>
