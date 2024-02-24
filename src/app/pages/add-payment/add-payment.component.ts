@@ -29,25 +29,25 @@ export class AddPaymentComponent {
   public memberships: IMembership[] = [
     {
       name: 'CLUB SALUDA+',
-      price: '$2,631 anual',
+      price: '$2,640 anual',
       alternative_name: 'Anual 2 pagos',
-      per_price: '$219.25 MXM / mes',
-      frequency_payment: '2 pagos de $1,316',
+      per_price: '$220 MXM / mes',
+      frequency_payment: '2 pagos de $1,320',
       frequency_payment_down_text: 'Mes 1 y mes 7',
       amount: 0,
       has_month: true,
-      value: 1316,
+      value: 1320,
     },
     {
       name: 'CLUB SALUDA+',
-      price: '$2,193 anual',
+      price: '$2,199 anual',
       alternative_name: 'Anual 1 pago',
       per_price: '2 meses gratis',
       frequency_payment: '1 solo pago',
-      frequency_payment_down_text: '$182.75 MXM / mes',
+      frequency_payment_down_text: '$183.25 MXM / mes',
       amount: 0,
       has_year: true,
-      value: 2193,
+      value: 2199,
     }
   ]
 
