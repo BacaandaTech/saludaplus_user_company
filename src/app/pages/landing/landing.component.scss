@@ -35,6 +35,9 @@
                 text-transform: uppercase;
                 padding: 15px 35px;
                 border-radius: 0 15px 15px 0;
+                @media(max-width: 500px) {
+                    font-size: 14px;
+                }
                 .border-circle{
                     position: absolute;
                     left: 0;
