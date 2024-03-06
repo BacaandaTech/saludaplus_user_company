@@ -1,13 +1,13 @@
 <nav class="navbar-breadcrumb px-5">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb my-3">
             <li class="breadcrumb-item" *ngFor="let link of links">
                 <a [routerLink]='[link.url]'>{{link.label}}</a>
             </li>
         </ol>
     </nav>
     <div class="ms-auto d-flex align-items-center">
-        <input type="text" class="form-control" name="" placeholder="Buscar" [(ngModel)]="searchValue" placeholder="Buscar" (ngModelChange)="this.searchDebounce.next($event)" *ngIf="searchBar"/>
+        <input type="text" class="form-control my-3" name="" placeholder="Buscar" [(ngModel)]="searchValue" placeholder="Buscar" (ngModelChange)="this.searchDebounce.next($event)" *ngIf="searchBar"/>
         <button class="btn btn-add ms-3" *ngIf="actionButton && buttonDetails !== undefined" (click)="handleActionButton()">{{buttonDetails.label}}</button>
     </div>
 </nav>
